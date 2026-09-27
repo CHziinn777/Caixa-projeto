@@ -11,3 +11,14 @@ select *
 from produtos;
 
 insert into produtos (nome, preco, quantidade);
+values (%s, %s, %s)
+
+delete
+from produtos
+where nome = %s
+
+UPDATE produtos
+set preco = %s
+set nome = %s
+set quantidade
+where nome = %s
