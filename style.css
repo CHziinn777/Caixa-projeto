@@ -1,0 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.pai{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    gap: 1px;
+}
+
+.cima{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    background-color: rgb(239, 187, 119);
+    height: 15vh;
+    width: 100vw;
+}
+
+.titulo_header{
+    text-align: center;
+    font-size: 5vh;
+}
+
+.centro{
+    display: flex;
+    flex-direction: row;
+    height: 75vh;
+    width: 100vw;
+    gap: 1px;
+}
+
+.esquerda{
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(217, 146, 59);
+    width: 65vw;
+}
+
+.direita{
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(128, 106, 80);
+    width: 35vw;
+}
+
+.baixo{
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(128, 118, 107);
+    flex-grow: 1;
+}

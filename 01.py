@@ -19,6 +19,11 @@ ferramenta.execute("SELECT * FROM produtos")
 resultado = ferramenta.fetchall()
 
 def seletor():
+    print ('1- Caixa')
+    print ('2 - Controle Financeiro')
+    print ('3 - Mercadorias')
+    print ('4- Visualizar produtos')
+    
     menu = input ('Escolha a função desejada: ')
     
     if menu not in opcoes:
