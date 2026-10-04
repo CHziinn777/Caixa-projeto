@@ -1,10 +1,14 @@
+import os
 import mysql.connector
+from dotenv import load_dotenv
+
+load_dotenv()
 
 conexao = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="gulugu777",
-    database="mercado_database"
+    host=os.getenv("DB_HOST"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    database=os.getenv("DB_DATABASE")
 )
 
 ferramenta = conexao.cursor()
@@ -21,7 +25,7 @@ def seletor():
         return seletor()
     
     if menu == '1':
-        print ('Caixa')
+        caixa()
     
     elif menu == '2':
         print ('Controle financeiro')
@@ -31,6 +35,20 @@ def seletor():
 
     elif menu == '4':
         infos()
+
+def caixa():
+    nome = input ('Digite o nome do produto: ')
+    ferramenta.execute(
+        'Select preco from produtos where nome = %s',
+        (nome,)
+    )
+    resultado = ferramenta.fetchone()
+    resultado [0]
+    preco = resultado [0]
+
+    quantia = int(input('Digite a quantia de produtos desejados: '))
+    sub_total = quantia * preco
+    print (f'resultado: {sub_total}')
 
 def infos():
     visualizar = input ('Visualizar produtos? ').lower()
@@ -45,6 +63,7 @@ def gestao_produtos():
     print ('1 - Adicionar produto')
     print ('2 - Excluir Produto')
     print ('3 - Modificar Produto')
+    print ('0 - Voltar')
 
     gestao = input ('Selecione 0/1/2 ou 3: ')
 
