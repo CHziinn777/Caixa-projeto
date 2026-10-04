@@ -1,6 +1,7 @@
 import os
 import mysql.connector
 from dotenv import load_dotenv
+from decimal import Decimal
 
 load_dotenv()
 
@@ -37,20 +38,34 @@ def seletor():
         infos()
 
 def caixa():
-    nome = input ('Digite o nome do produto: ')
-    ferramenta.execute(
+    conjunto_total = ([])
+    while True:
+        nome = input ('Digite o nome do produto: ')
+        if nome == 'nao':
+            total = Decimal(sum(conjunto_total))
+            print (total)
+
+            dinheiro = Decimal(input('Digite o dinheiro recebido: '))
+            troco = dinheiro - total
+            print (f'Troco: {troco}')
+            return seletor()
+        
+        ferramenta.execute(
         'Select preco from produtos where nome = %s',
         (nome,)
-    )
-    resultado = ferramenta.fetchone()
-    resultado [0]
-    preco = resultado [0]
-
-    quantia = int(input('Digite a quantia de produtos desejados: '))
-    sub_total = quantia * preco
-    print (f'resultado: {sub_total}')
+        )
+        resultado = ferramenta.fetchone()
+        
+        resultado [0]
+        preco = resultado [0]
+    
+        quantia = int(input('Digite a quantia de produtos desejados: '))
+        sub_total = quantia * preco
+        print (f'resultado: {sub_total}')
+        conjunto_total.append(sub_total)
 
 def infos():
+
     visualizar = input ('Visualizar produtos? ').lower()
     
     if visualizar == 'nao' or visualizar == 'não':
