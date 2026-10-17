@@ -21,3 +21,9 @@ UPDATE produtos
 SET preco = %s
 SET nome = %s
 WHERE nome = %s
+
+create table financeiro (
+    id int primary key auto_incrament,
+    produtos vendidos int not null,
+    dinheiro decimal(10,2) not null
+)
