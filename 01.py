@@ -1,7 +1,7 @@
 import os
 import mysql.connector
 from dotenv import load_dotenv
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 
 load_dotenv()
 
@@ -42,33 +42,64 @@ def seletor():
     elif menu == '4':
         infos()
 
+
 def caixa():
-    conjunto_total = ([])
+    conjunto_total = []
+
     while True:
-        nome = input ('Digite o nome do produto: ')
-        if nome == 'nao':
-            total = Decimal(sum(conjunto_total))
-            print (total)
+        nome = input('Digite o nome do produto: ')
 
-            dinheiro = Decimal(input('Digite o dinheiro recebido: '))
+        if nome.lower() == 'nao':
+            total = sum(conjunto_total)
+            print(f'Total da compra: R$ {total:.2f}')
+
+            try:
+                dinheiro = Decimal(input('Digite o dinheiro recebido: '))
+            except InvalidOperation:
+                print('Valor inválido! Digite um valor valído.')
+                continue
+
             troco = dinheiro - total
-            print (f'Troco: {troco}')
-            return seletor()
-        
-        ferramenta.execute(
-        'Select preco from produtos where nome = %s',
-        (nome,)
-        )
-        resultado = ferramenta.fetchone()
-        
-        resultado [0]
-        preco = resultado [0]
-    
-        quantia = int(input('Digite a quantia de produtos desejados: '))
-        sub_total = quantia * preco
-        print (f'resultado: {sub_total}')
-        conjunto_total.append(sub_total)
 
+            if troco < 0:
+                print('Dinheiro insuficiente!')
+                continue
+
+            print(f'Troco: R$ {troco:.2f}')
+            return seletor()
+
+        try:
+            ferramenta.execute(
+                'SELECT preco FROM produtos WHERE nome = %s',
+                (nome,)
+            )
+        except Exception as erro:
+            print(f'Erro ao consultar o banco: {erro}')
+            continue
+
+        resultado = ferramenta.fetchone()
+
+        if resultado is None:
+            print('Produto não encontrado!')
+            continue
+
+        preco = resultado[0]
+
+        try:
+            quantia = int(input('Digite a quantidade desejada: '))
+        except ValueError:
+            print('Digite uma quantidade numérica!')
+            continue
+
+        if quantia <= 0:
+            print('Quantidade inválida!')
+            continue
+
+        sub_total = quantia * preco
+
+        print(f'Subtotal: R$ {sub_total:.2f}')
+        conjunto_total.append(sub_total)
+        
 def infos():
 
     visualizar = input ('Visualizar produtos? ').lower()
