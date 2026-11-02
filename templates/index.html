@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Caixa Ponto X</title>
+</head>
+<body class="pai">
+    <header class="cima">
+        <h1 class="titulo_header">Caixa Ponto X</h1>
+    </header>
+
+    <main class="centro">
+        <section class="esquerda" id="area-produtos">
+            <h2 class="titulo_prod">Produtos</h2>
+            <nav class="produtos" aria-label="Categorias de produtos">
+                <button type="button" class="escolha" id="categoria-bebidas">
+                    Bebidas
+                </button>
+                <button type="button" class="escolha" id="categoria-doces">
+                    Doces e alimentos
+                </button>
+                <button type="button" class="escolha" id="categoria-limpeza">
+                    Limpeza
+                </button>
+                <button type="button" class="escolha" id="categoria-outros">
+                    Outros
+                </button>
+            </nav>
+            <section class="lista-produtos" id="lista-produtos">
+                <h2>Mercadorias</h2>
+            </section>
+        </section>
+        <section class="direita" id="area-carrinho">
+            <h2 class="titulo_carrinho">Carrinho</h2>
+            <ul class="carrinho" id="lista-carrinho">
+            </ul>
+        </section>
+    </main>
+
+    <footer class="baixo">
+        <button type="button" class="finish" id="finalizar-compra">
+            Finalizar compra
+        </button>
+    </footer>
+</body>
+</html>
