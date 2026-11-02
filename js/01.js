@@ -1,0 +1,1 @@
+const listaProdutos = document.querySelector('#lista-produtos');
