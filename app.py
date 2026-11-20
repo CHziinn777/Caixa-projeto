@@ -14,9 +14,12 @@ def conectar_banco():
         password=os.getenv("DB_PASSWORD"),
         database=os.getenv("DB_DATABASE")
     )
-
 @app.route('/')
 def inicio():
+    return render_template('index2.html')
+
+@app.route('/gestao')
+def gestao():
     return render_template('index2.html')
 
 @app.route('/caixa')
@@ -33,17 +36,18 @@ def listar_produtos():
         cursor = conexao.cursor(dictionary=True)
 
         cursor.execute("""
-            SELECT
-                p.id,
-                p.nome,
-                p.preco,
-                p.quantidade,
-                c.nome AS categoria
-            FROM produtos AS p
-            LEFT JOIN categorias AS c
-                ON c.id = p.categoria_id
-            ORDER BY p.nome
-        """)
+        SELECT
+            p.id,
+            p.nome,
+            p.preco,
+            p.quantidade,
+            p.imagem,
+            c.nome AS categoria
+        FROM produtos AS p
+        LEFT JOIN categorias AS c
+            ON c.id = p.categoria_id
+        ORDER BY p.nome
+    """)
 
         produtos = cursor.fetchall()
 
@@ -64,7 +68,6 @@ def listar_produtos():
 
         if conexao is not None:
             conexao.close()
-
 
 if __name__ == '__main__':
     app.run(debug=True)

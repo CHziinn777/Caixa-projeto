@@ -1,24 +1,221 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style2.css">
-  <title>Gestao de produtos</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style2.css') }}">
+
+    <title>Gestão de Produtos | Caixa Ponto X</title>
 </head>
-<body>
-  <nav >
-    <p class="legenda">Seletor</p>
-  </nav>
-  <div class="sup-infe">
-    <header>
-      <p class="legenda">Pesquisa</p>
-    </header>
-    <div class="meio">
-      <article>
-        <p class="legenda">Centro</p>
-      </article>
+
+<body class="pagina-gestao">
+
+    <nav class="menu-lateral">
+        <div class="marca">
+            <h1>PONTO X</h1>
+            <p>Gerenciamento</p>
+        </div>
+
+        <div class="menu-opcoes">
+            <button class="menu-item ativo" type="button" id="menu-produtos">
+                <span>Produtos</span>
+            </button>
+
+            <button class="menu-item" type="button" id="menu-cadastro">
+                <span>Cadastrar produto</span>
+            </button>
+
+            <button class="menu-item" type="button" id="menu-categorias">
+                <span>Categorias</span>
+            </button>
+        </div>
+
+        <a class="voltar" href="{{ url_for('caixa') }}">
+            Voltar ao caixa
+        </a>
+    </nav>
+
+    <div class="conteudo-principal">
+
+        <header class="cabecalho">
+            <div class="titulo-pagina">
+                <h2>Gestão de produtos</h2>
+                <p>Gerencie as mercadorias do estabelecimento.</p>
+            </div>
+
+            <div class="pesquisa">
+                <input
+                    type="search"
+                    id="pesquisa-produtos"
+                    placeholder="Pesquisar produto..."
+                    aria-label="Pesquisar produtos"
+                >
+            </div>
+        </header>
+
+        <main class="area-trabalho">
+
+            <section class="painel-produtos">
+
+                <div class="painel-titulo">
+                    <div>
+                        <h2>Mercadorias</h2>
+                        <p>Produtos cadastrados no sistema</p>
+                    </div>
+
+                    <button type="button" id="novo-produto">
+                        + Novo produto
+                    </button>
+                </div>
+
+                <div class="filtros" id="filtros-categorias">
+                    <button type="button" class="filtro ativo"
+                            data-categoria="Todas">
+                        Todas
+                    </button>
+
+                    <button type="button" class="filtro"
+                            data-categoria="Bebidas">
+                        Bebidas
+                    </button>
+
+                    <button type="button" class="filtro"
+                            data-categoria="Guloseimas">
+                        Guloseimas
+                    </button>
+
+                    <button type="button" class="filtro"
+                            data-categoria="Limpeza">
+                        Limpeza
+                    </button>
+
+                    <button type="button" class="filtro"
+                            data-categoria="Outros">
+                        Outros
+                    </button>
+                </div>
+
+                <div class="lista-produtos" id="lista-produtos">
+
+                    <div class="mensagem-vazia">
+                        <h3>Carregando produtos...</h3>
+                        <p>Os produtos cadastrados aparecerão aqui.</p>
+                    </div>
+
+                </div>
+
+            </section>
+            
+            <aside class="painel-cadastro" id="painel-cadastro">
+
+                <div class="painel-titulo">
+                    <div>
+                        <h2>Novo produto</h2>
+                        <p>Preencha as informações abaixo.</p>
+                    </div>
+                </div>
+
+                <form id="form-produto" enctype="multipart/form-data">
+
+                    <div class="campo">
+                        <label for="nome-produto">Nome do produto</label>
+
+                        <input
+                            type="text"
+                            id="nome-produto"
+                            name="nome"
+                            placeholder="Ex: Coca-Cola 2L"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="preco-produto">Preço (R$)</label>
+
+                        <input
+                            type="number"
+                            id="preco-produto"
+                            name="preco"
+                            placeholder="0,00"
+                            min="0"
+                            step="0.01"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="quantidade-produto">Quantidade em estoque</label>
+
+                        <input
+                            type="number"
+                            id="quantidade-produto"
+                            name="quantidade"
+                            placeholder="0"
+                            min="0"
+                            step="1"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="categoria-produto">Categoria</label>
+
+                        <select
+                            id="categoria-produto"
+                            name="categoria"
+                            required
+                        >
+                            <option value="">Selecione uma categoria</option>
+                            <option value="Bebidas">Bebidas</option>
+                            <option value="Guloseimas">Guloseimas</option>
+                            <option value="Limpeza">Limpeza</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="imagem-produto">Imagem do produto</label>
+
+                        <input
+                            type="file"
+                            id="imagem-produto"
+                            name="imagem"
+                            accept="image/*"
+                            required
+                        >
+                    </div>
+
+                    <div class="preview-imagem" id="preview-imagem">
+                        <img
+                            id="imagem-preview"
+                            src=""
+                            alt="Pré-visualização do produto"
+                            hidden
+                        >
+
+                        <p id="texto-preview">
+                            A imagem aparecerá aqui.
+                        </p>
+                    </div>
+
+                    <button type="submit" class="botao-cadastrar">
+                        Cadastrar produto
+                    </button>
+
+                </form>
+
+            </aside>
+
+        </main>
+
     </div>
-  </div>
+
+    <script
+        src="{{ url_for('static', filename='js/gestao.js') }}"
+        defer>
+    </script>
+
 </body>
 </html>
